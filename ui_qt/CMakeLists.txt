@@ -10,8 +10,8 @@ CONFIGURE_FILE(
     )
 
 # Build source list with enabled components
-SET(UIQT_FILES MainWindow.cpp)
-SET(UIQT_HEADERS MainWindow.h)
+SET(UIQT_FILES GameCanvas.cpp MainWindow.cpp)
+SET(UIQT_HEADERS GameCanvas.h MainWindow.h)
 
 # Meta-object compiler pass
 QT4_WRAP_CPP(UIQT_HEADERS_MOC ${UIQT_HEADERS})

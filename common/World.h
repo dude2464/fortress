@@ -13,7 +13,7 @@ enum Tile {
 /**
  * A chunk is a small square area.
  */
-class Chunk {
+class IChunk {
 
 protected:
     Tile m_Tiles[CHUNK_SIZE * CHUNK_SIZE];
@@ -26,10 +26,13 @@ public:
 
 };
 
-class World {
+/**
+ * The world.
+ */
+class IWorld {
 
 public:
-    virtual const std::shared_ptr<Chunk> getChunk(int X, int Y) = 0;
+    virtual const std::shared_ptr<IChunk> getChunk(int X, int Y) = 0;
 
 };
 
