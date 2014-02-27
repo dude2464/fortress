@@ -5,6 +5,10 @@ class GameParameters {
 };
 
 class IGame {
+
+public:
+    virtual ~IGame();
+
 };
 
 /**
@@ -15,6 +19,7 @@ class IGame {
 class IFortress {
 
 public:
+    virtual ~IFortress();
     static IFortress *getFortress(const char *ui_version);
     virtual IGame *newGame(const GameParameters &params) = 0;
 

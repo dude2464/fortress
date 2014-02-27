@@ -1,5 +1,13 @@
 #include "core/Fortress.h"
 
+IGame::~IGame()
+{
+}
+
+IFortress::~IFortress()
+{
+}
+
 Fortress::Fortress(const char *ui_version)
 {
 }
