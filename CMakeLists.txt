@@ -1,6 +1,9 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-set(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x")
 PROJECT(fortress)
+
+IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    SET(CMAKE_CXX_FLAGS "-Wall -std=c++0x")
+ENDIF()
 
 # Works around silly limitations in CMake
 SET(EMPTY_FILE ${CMAKE_BINARY_DIR}/dummy.c)
