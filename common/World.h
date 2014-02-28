@@ -3,13 +3,40 @@
 
 #include <memory>
 
+#include "common/Vector.h"
+
+#define CHUNK_SIZE_E 8
+#define CHUNK_SIZE (2 << (CHUNK_SIZE_E-1)) // 256
+#define CHUNK_DEPTH_E 4
+#define CHUNK_DEPTH (2 << (CHUNK_DEPTH_E-1)) // 16
+
+class Coordinates;
+
+typedef CoordinatesMultiple<CHUNK_SIZE, CHUNK_SIZE,
+                            CHUNK_DEPTH,
+                            Coordinates> ChunkCoordinates;
+
+class Coordinates : public Vector3 {
+
+public:
+    Coordinates(int x_, int y_, int z_)
+      : Vector3(x_, y_, z_)
+    {
+    }
+
+    inline ChunkCoordinates chunk() const
+    {
+        return ChunkCoordinates(x >> CHUNK_SIZE_E,
+                                y >> CHUNK_SIZE_E,
+                                z >> CHUNK_DEPTH_E);
+    }
+
+};
+
 enum class Tile : unsigned char {
     ROCK    = 0x01,
     AIR     = 0x02
 };
-
-#define CHUNK_SIZE 256
-#define CHUNK_DEPTH 16
 
 /**
  * A chunk is a small portion of the world.

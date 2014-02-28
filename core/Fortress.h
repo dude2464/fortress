@@ -3,6 +3,21 @@
 
 #include "common/Fortress.h"
 
+class World;
+
+class Game : public IGame {
+
+private:
+    World *m_World;
+
+public:
+    Game();
+    ~Game();
+    IWorld *world();
+
+};
+
+
 class Fortress : public IFortress {
 
 public:
@@ -10,5 +25,4 @@ public:
     IGame *newGame(const GameParameters &params);
 
 };
-
 #endif

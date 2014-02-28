@@ -3,7 +3,9 @@
 
 #include <QWidget>
 
-#include "common/Fortress.h"
+#include "common/World.h"
+
+class IGame;
 
 /**
  * The central zone that shows a game's world.
@@ -14,8 +16,16 @@ class GameCanvas : public QWidget {
 
     Q_OBJECT
 
+private:
+    IGame *m_Game;
+    Coordinates m_Position; // Current position of camera
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public:
     GameCanvas(IGame *game);
+    QSize sizeHint();
 
 };
 

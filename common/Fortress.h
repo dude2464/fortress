@@ -1,6 +1,8 @@
 #ifndef COMMON_FORTRESS_H
 #define COMMON_FORTRESS_H
 
+class IWorld;
+
 class GameParameters {
 };
 
@@ -8,6 +10,7 @@ class IGame {
 
 public:
     virtual ~IGame();
+    virtual IWorld *world() = 0;
 
 };
 
