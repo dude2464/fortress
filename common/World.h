@@ -5,10 +5,10 @@
 
 #include "common/Vector.h"
 
-#define CHUNK_SIZE_E 8
-#define CHUNK_SIZE (2 << (CHUNK_SIZE_E-1)) // 256
-#define CHUNK_DEPTH_E 4
-#define CHUNK_DEPTH (2 << (CHUNK_DEPTH_E-1)) // 16
+#define CHUNK_SIZE_E 7
+#define CHUNK_SIZE (2 << (CHUNK_SIZE_E-1)) // 128
+#define CHUNK_DEPTH_E 2
+#define CHUNK_DEPTH (2 << (CHUNK_DEPTH_E-1)) // 4
 
 class Coordinates;
 
