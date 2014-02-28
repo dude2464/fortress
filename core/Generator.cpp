@@ -1,6 +1,8 @@
 #include <cmath>
 #include <random>
 
+#include "logging/logging.h"
+
 #include "core/Generator.h"
 #include "core/World.h"
 
@@ -16,6 +18,8 @@ static int shift32(uint32_t x, uint32_t y)
 
 std::shared_ptr<Chunk> Generator::generate(int X, int Y, int Z)
 {
+    logging.log(3, "Generating chunk %d;%d;%d", X, Y, Z);
+
     // TODO : Actually generate chunks
     // This just fills stuff randomly so we have something to display
 

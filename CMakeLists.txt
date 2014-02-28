@@ -13,6 +13,9 @@ file(WRITE ${EMPTY_FILE} "")
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}")
 
+# Recursively builds logging component
+ADD_SUBDIRECTORY(logging)
+
 # Recursively builds core component
 ADD_SUBDIRECTORY(core)
 
@@ -21,5 +24,5 @@ OPTION(BUILD_QT_UI "Build the Qt UI (requires Qt and QtGui)" OFF)
 IF(BUILD_QT_UI)
     ADD_SUBDIRECTORY(ui_qt)
     ADD_EXECUTABLE(fortress_qt ${EMPTY_FILE})
-    TARGET_LINK_LIBRARIES(fortress_qt uiqt core)
+    TARGET_LINK_LIBRARIES(fortress_qt uiqt core logging)
 ENDIF()

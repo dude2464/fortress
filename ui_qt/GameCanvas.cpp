@@ -1,6 +1,8 @@
 #include <QPainter>
 #include <QPaintEvent>
 
+#include "logging/logging.h"
+
 #include "common/Fortress.h"
 #include "common/World.h"
 
@@ -27,6 +29,8 @@ int mod(int a, int b)
 
 void GameCanvas::paintEvent(QPaintEvent *event)
 {
+    logging.log(2, "View is at %d;%d;%d",
+                m_Position.x, m_Position.y, m_Position.z);
     QPainter painter(this);
     Coordinates screencorner(m_Position.x - 20,
                              m_Position.y - 20,
@@ -39,6 +43,8 @@ void GameCanvas::paintEvent(QPaintEvent *event)
         m_Game->world()->getChunk(topleft.X  , topleft.Y+1, topleft.Z),
         m_Game->world()->getChunk(topleft.X+1, topleft.Y+1, topleft.Z),
     };
+
+    logging.log(2, "Rendering from %d;%d;%d", topleft.X, topleft.Y, topleft.Z);
 
     painter.setPen(Qt::NoPen);
 

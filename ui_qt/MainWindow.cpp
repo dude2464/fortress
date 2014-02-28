@@ -5,6 +5,8 @@
 #include <QTextCodec>
 #include <QVBoxLayout>
 
+#include "logging/logging.h"
+
 #include "ui_qt/MainWindow.h"
 #include "ui_qt/config.h"
 
@@ -98,6 +100,9 @@ bool MainWindow::maybeSaveGame()
 
 int main(int argc, char **argv)
 {
+    // Sets up logger
+    logging.addOutput(std::make_shared<ConsoleOutput>());
+
     // Starts up the core
     fortress = IFortress::getFortress("Qt UI v" UIQT_VERSION_STRING);
 
