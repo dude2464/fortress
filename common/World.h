@@ -3,25 +3,26 @@
 
 #include <memory>
 
-enum Tile {
-    ROCK,
-    AIR
+enum class Tile : unsigned char {
+    ROCK    = 0x01,
+    AIR     = 0x02
 };
 
-#define CHUNK_SIZE 1024
+#define CHUNK_SIZE 256
+#define CHUNK_DEPTH 16
 
 /**
- * A chunk is a small square area.
+ * A chunk is a small portion of the world.
  */
 class IChunk {
 
 protected:
-    Tile m_Tiles[CHUNK_SIZE * CHUNK_SIZE];
+    Tile m_Tiles[CHUNK_SIZE * CHUNK_SIZE * CHUNK_DEPTH];
 
 public:
-    inline Tile operator()(int x, int y) const
+    inline Tile operator()(int x, int y, int z) const
     {
-        return m_Tiles[y * CHUNK_SIZE + x];
+        return m_Tiles[(z * CHUNK_DEPTH + y) * CHUNK_SIZE + x];
     }
 
 };
@@ -32,7 +33,7 @@ public:
 class IWorld {
 
 public:
-    virtual const std::shared_ptr<IChunk> getChunk(int X, int Y) = 0;
+    virtual const std::shared_ptr<IChunk> getChunk(int X, int Y, int Z) = 0;
 
 };
 

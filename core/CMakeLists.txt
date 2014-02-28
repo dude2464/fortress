@@ -8,7 +8,7 @@ CONFIGURE_FILE(
     )
 
 # Build source list with enabled components
-SET(CORE_FILES Fortress.cpp World.cpp)
+SET(CORE_FILES Fortress.cpp Generator.cpp World.cpp)
 
 # Build library
 ADD_LIBRARY(core ${CORE_FILES})
