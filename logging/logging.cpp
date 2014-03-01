@@ -90,7 +90,7 @@ void Logger::popStatus()
 
 LoggingLevelFilter::LoggingLevelFilter(unsigned int minlevel,
                                        std::shared_ptr<LoggingOutput> filtered)
- :  level(minlevel), output(filtered)
+  : level(minlevel), output(filtered)
 {
 }
 

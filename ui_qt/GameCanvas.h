@@ -22,6 +22,7 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 public:
     GameCanvas(IGame *game);

@@ -9,8 +9,9 @@
 #include "ui_qt/GameCanvas.h"
 
 GameCanvas::GameCanvas(IGame *game)
-    : m_Game(game), m_Position(1000, -289, 0)
+  : m_Game(game), m_Position(1000, -289, 0)
 {
+    setFocusPolicy(Qt::StrongFocus);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
@@ -74,4 +75,26 @@ void GameCanvas::paintEvent(QPaintEvent *event)
                              20 * (y - screencorner.y), 20, 20);
         }
     }
+}
+
+void GameCanvas::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Left)
+        m_Position.x -= 1;
+    else if(event->key() == Qt::Key_Right)
+        m_Position.x += 1;
+    else if(event->key() == Qt::Key_Up)
+        m_Position.y -= 1;
+    else if(event->key() == Qt::Key_Down)
+        m_Position.y += 1;
+    else if(event->text() == "<")
+        m_Position.z += 1;
+    else if(event->text() == ">")
+        m_Position.z -= 1;
+    else
+    {
+        QWidget::keyPressEvent(event);
+        return ;
+    }
+    repaint();
 }

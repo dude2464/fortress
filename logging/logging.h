@@ -107,13 +107,13 @@ public:
     }
 
     inline LoggingContext(const std::string &msg)
-        : logger(logging)
+      : logger(logging)
     {
         logging.pushStatus(msg);
     }
 
     inline LoggingContext(Logger &log, const char *format, ...)
-        : logger(log)
+      : logger(log)
     {
         static char buf[2048];
         va_list ap;
@@ -124,7 +124,7 @@ public:
     }
 
     inline LoggingContext(const char *format, ...)
-        : logger(logging)
+      : logger(logging)
     {
         static char buf[2048];
         va_list ap;
