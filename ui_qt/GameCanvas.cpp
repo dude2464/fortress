@@ -20,14 +20,6 @@ QSize GameCanvas::sizeHint()
     return QSize(800, 800);
 }
 
-int mod(int a, int b)
-{
-    if(a >= 0)
-        return a % b;
-    else
-        return b - 1 - (-a - 1) % b;
-}
-
 void GameCanvas::paintEvent(QPaintEvent *event)
 {
     logging.log(2, "View is at %d;%d;%d",
@@ -57,10 +49,7 @@ void GameCanvas::paintEvent(QPaintEvent *event)
                     x, y, m_Position.z).chunk();
             int xi = (chunk.X > topleft.X)?1:0;
             int yi = (chunk.Y > topleft.Y)?2:0;
-            Coordinates chunk_topleft(chunk);
-            Tile t = (*chunks[xi + yi])(x - chunk_topleft.x,
-                                        y - chunk_topleft.y,
-                                        m_Position.z - chunk_topleft.z);
+            Tile t = (*chunks[xi + yi])(x, y, m_Position.z);
             switch(t)
             {
             case Tile::AIR:

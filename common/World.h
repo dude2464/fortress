@@ -6,9 +6,9 @@
 #include "common/Vector.h"
 
 #define CHUNK_SIZE_E 7
-#define CHUNK_SIZE (2 << (CHUNK_SIZE_E-1)) // 128
+#define CHUNK_SIZE (1 << CHUNK_SIZE_E) // 128
 #define CHUNK_DEPTH_E 2
-#define CHUNK_DEPTH (2 << (CHUNK_DEPTH_E-1)) // 4
+#define CHUNK_DEPTH (1 << CHUNK_DEPTH_E) // 4
 
 class Coordinates;
 
@@ -49,7 +49,15 @@ protected:
 public:
     inline Tile operator()(int x, int y, int z) const
     {
+        x = mod(x, CHUNK_SIZE);
+        y = mod(y, CHUNK_SIZE);
+        z = mod(z, CHUNK_DEPTH);
         return m_Tiles[(z * CHUNK_DEPTH + y) * CHUNK_SIZE + x];
+    }
+
+    inline Tile operator()(const Coordinates &coords) const
+    {
+        return (*this)(coords.x, coords.y, coords.z);
     }
 
 };
@@ -60,7 +68,12 @@ public:
 class IWorld {
 
 public:
-    virtual const std::shared_ptr<IChunk> getChunk(int X, int Y, int Z) = 0;
+    inline  std::shared_ptr<IChunk> getChunk(int X, int Y, int Z)
+    {
+        return getChunk(ChunkCoordinates(X, Y, Z));
+    }
+
+    virtual std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk) = 0;
 
 };
 

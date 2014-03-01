@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "common/World.h"
+
 class Chunk;
 
 /**
@@ -18,7 +20,7 @@ private:
 
 public:
     Generator(unsigned long seed);
-    std::shared_ptr<Chunk> generate(int X, int Y, int Z);
+    std::shared_ptr<Chunk> generate(const ChunkCoordinates &coords);
 
 };
 

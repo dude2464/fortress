@@ -3,6 +3,8 @@
 
 #include "logging/logging.h"
 
+#include "common/utils.h"
+
 #include "core/Generator.h"
 #include "core/World.h"
 
@@ -11,26 +13,21 @@ Generator::Generator(unsigned long seed)
 {
 }
 
-static int shift32(uint32_t x, uint32_t y)
+std::shared_ptr<Chunk> Generator::generate(const ChunkCoordinates &coords)
 {
-    return (x << y | x >> (32-y)) & 0xFFFFFFFF;
-}
-
-std::shared_ptr<Chunk> Generator::generate(int X, int Y, int Z)
-{
-    logging.log(3, "Generating chunk %d;%d;%d", X, Y, Z);
+    logging.log(3, "Generating chunk %d;%d;%d", coords.X, coords.Y, coords.Z);
 
     // TODO : Actually generate chunks
     // This just fills stuff randomly so we have something to display
 
-    std::mt19937 rnd(shift32(X, 24) | shift32(Y, 16) | shift32(Z, 8) | m_Seed);
+    std::mt19937 rnd(shift32(coords.X, 24) | shift32(coords.Y, 16) | shift32(coords.Z, 8) | m_Seed);
     std::uniform_real_distribution<> dis(0, 1);
 
     Chunk *chunk = new Chunk();
 
     // Probability of rocks
-    float prob = powf(0.5f, 1.0f + fabsf((float)Z));
-    if(Z < 0)
+    float prob = powf(0.5f, 1.0f + fabsf((float)coords.Z));
+    if(coords.Z < 0)
         prob = 1.0f - prob;
 
     for(int x = 0; x < CHUNK_SIZE; ++x)

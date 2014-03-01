@@ -22,11 +22,11 @@ class World : public IWorld {
 
 private:
     Generator m_Generator;
-    std::unordered_map<Vector3, std::shared_ptr<Chunk> > m_Chunks;
+    std::unordered_map<ChunkCoordinates, std::shared_ptr<Chunk> > m_Chunks;
 
 public:
     World(unsigned long seed);
-    const std::shared_ptr<IChunk> getChunk(int X, int Y, int Z);
+    std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk);
 
 };
 

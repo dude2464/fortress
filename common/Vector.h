@@ -1,6 +1,8 @@
 #ifndef COMMON_VECTOR_H
 #define COMMON_VECTOR_H
 
+#include "common/utils.h"
+
 class Vector3 {
 
 public:
@@ -51,10 +53,22 @@ namespace std {
 
         value_type operator()(const argument_type &vec) const
         {
-            const value_type hx(std::hash<int>()(vec.x));
-            const value_type hy(std::hash<int>()(vec.y));
-            const value_type hz(std::hash<int>()(vec.z));
-            return (hx << 2) ^ (hy << 1) ^ hz;
+            return std::hash<int>()(shift32(vec.x, 16) ^
+                                    shift32(vec.y, 8) ^
+                                    vec.z);
+        }
+    };
+
+    template<int XM, int YM, int ZM, typename VectorClass>
+    struct hash<CoordinatesMultiple<XM, YM, ZM, VectorClass> > {
+        typedef CoordinatesMultiple<XM, YM, ZM, VectorClass> argument_type;
+        typedef std::size_t value_type;
+
+        value_type operator()(const argument_type &vec) const
+        {
+            return std::hash<int>()(shift32(vec.X, 16) ^
+                                    shift32(vec.Y, 8) ^
+                                    vec.Z);
         }
     };
 }
