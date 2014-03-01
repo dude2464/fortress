@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "common/utils.h"
 #include "common/Vector.h"
 
 #define CHUNK_SIZE_E 7
@@ -74,6 +75,54 @@ public:
     }
 
     virtual std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk) = 0;
+
+};
+
+/**
+ * Chunk cache for faster access.
+ *
+ * This keeps an array of 2^E chunks so you don't have to go to the IWorld to
+ * get chunks
+ */
+template<unsigned int E>
+class ChunkCache {
+
+private:
+    static const unsigned int NB = 1 << E;
+    static const unsigned int MASK = NB - 1;
+
+    inline static size_t entry(const ChunkCoordinates &chunk)
+    {
+        const unsigned int xbits = (E + 2)/3;
+        const unsigned int ybits = (E + 1)/3;
+        const unsigned int zbits = (E + 0)/3;
+        return ((chunk.X & bits(xbits)) << (ybits + zbits)) |
+               ((chunk.Y & bits(ybits)) << zbits) |
+               (chunk.Z & bits(zbits));
+    }
+
+private:
+    IWorld *m_World;
+    std::pair<ChunkCoordinates, std::shared_ptr<IChunk> > m_Chunks[NB];
+    size_t m_Pos;
+
+public:
+    inline ChunkCache(IWorld *world)
+      : m_World(world), m_Pos(0)
+    {
+    }
+
+    inline std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk)
+    {
+        const size_t idx = entry(chunk);
+        const std::pair<ChunkCoordinates, std::shared_ptr<IChunk> > &c =
+                m_Chunks[idx];
+        if(c.second && c.first == chunk)
+            return c.second;
+        std::shared_ptr<IChunk> new_chunk = m_World->getChunk(chunk);
+        m_Chunks[idx] = std::make_pair(chunk, new_chunk);
+        return new_chunk;
+    }
 
 };
 

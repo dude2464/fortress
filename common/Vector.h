@@ -33,6 +33,15 @@ public:
     int X, Y, Z;
 
 public:
+    CoordinatesMultiple()
+    {
+    }
+
+    CoordinatesMultiple(const CoordinatesMultiple<XM, YM, ZM, VectorClass> &other)
+      : X(other.X), Y(other.Y), Z(other.Z)
+    {
+    }
+
     CoordinatesMultiple(int X_, int Y_, int Z_)
       : X(X_), Y(Y_), Z(Z_)
     {

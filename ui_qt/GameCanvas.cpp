@@ -30,26 +30,18 @@ void GameCanvas::paintEvent(QPaintEvent *event)
                              m_Position.z);
     ChunkCoordinates topleft = screencorner.chunk();
     // Pre-load chunks
-    std::shared_ptr<IChunk> chunks[] = {
-        m_Game->world()->getChunk(topleft.X  , topleft.Y  , topleft.Z),
-        m_Game->world()->getChunk(topleft.X+1, topleft.Y  , topleft.Z),
-        m_Game->world()->getChunk(topleft.X  , topleft.Y+1, topleft.Z),
-        m_Game->world()->getChunk(topleft.X+1, topleft.Y+1, topleft.Z),
-    };
+    ChunkCache<2> cache(m_Game->world());
 
     logging.log(2, "Rendering from %d;%d;%d", topleft.X, topleft.Y, topleft.Z);
 
     painter.setPen(Qt::NoPen);
 
-    for(int y = screencorner.y; y < screencorner.y + 40; ++y)
+    Coordinates pos(0, 0, m_Position.z);
+    for(pos.y = screencorner.y; pos.y < screencorner.y + 40; ++pos.y)
     {
-        for(int x = screencorner.x; x < screencorner.x + 40; ++x)
+        for(pos.x = screencorner.x; pos.x < screencorner.x + 40; ++pos.x)
         {
-            ChunkCoordinates chunk = Coordinates(
-                    x, y, m_Position.z).chunk();
-            int xi = (chunk.X > topleft.X)?1:0;
-            int yi = (chunk.Y > topleft.Y)?2:0;
-            Tile t = (*chunks[xi + yi])(x, y, m_Position.z);
+            Tile t = (*cache.getChunk(pos.chunk()))(pos);
             switch(t)
             {
             case Tile::AIR:
@@ -60,8 +52,8 @@ void GameCanvas::paintEvent(QPaintEvent *event)
                 break;
             }
 
-            painter.drawRect(20 * (x - screencorner.x),
-                             20 * (y - screencorner.y), 20, 20);
+            painter.drawRect(20 * (pos.x - screencorner.x),
+                             20 * (pos.y - screencorner.y), 20, 20);
         }
     }
 }
