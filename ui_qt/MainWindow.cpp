@@ -102,6 +102,7 @@ int main(int argc, char **argv)
 {
     // Sets up logger
     logging.addOutput(std::make_shared<ConsoleOutput>());
+    logging.addOutput(std::make_shared<FileOutput>("fortress.log"));
 
     // Starts up the core
     fortress = IFortress::getFortress("Qt UI v" UIQT_VERSION_STRING);
