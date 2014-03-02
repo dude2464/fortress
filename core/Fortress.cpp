@@ -1,3 +1,8 @@
+#include <sstream>
+
+#include "logging/logging.h"
+
+#include "core/Dwarf.h"
 #include "core/Fortress.h"
 #include "core/World.h"
 
@@ -10,8 +15,25 @@ IFortress::~IFortress()
 }
 
 Game::Game()
-  : m_World(new World(42))
 {
+    logging.log("Starting new game");
+    logging.log("Creating world");
+    m_World = new World(42);
+    logging.log("Spawning dwarves");
+    Coordinates spawn(0, 0, 0);
+    Coordinates positions[] = {
+        spawn,
+        Coordinates(spawn.x + 2, spawn.y, spawn.z),
+        Coordinates(spawn.x - 2, spawn.y, spawn.z),
+        Coordinates(spawn.x, spawn.y + 3, spawn.z),
+        Coordinates(spawn.x, spawn.y - 3, spawn.z)
+    };
+    for(int i = 0; i < 5; ++i)
+    {
+        std::ostringstream name;
+        name << "Dwarf #" << i;
+        Dwarf(m_World, positions[i], name.str());
+    }
 }
 
 Game::~Game()

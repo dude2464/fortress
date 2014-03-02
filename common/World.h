@@ -112,21 +112,25 @@ public:
         DWARF       = 0x01
     };
 
-private:
-    Coordinates m_Coordinates;
+protected:
+    Coordinates m_Position;
 
 public:
+    IEntity(Coordinates position)
+        : m_Position(position)
+    {
+    }
     virtual ~IEntity();
 
     inline Coordinates position() const
     {
-        return m_Coordinates;
+        return m_Position;
     }
 
     virtual unsigned int type() const = 0;
+    virtual std::string name() const = 0;
 
 };
-
 
 /**
  * Ground layer, contains stuff.

@@ -8,7 +8,7 @@ CONFIGURE_FILE(
     )
 
 # Build source list with enabled components
-SET(CORE_FILES Fortress.cpp Generator.cpp World.cpp)
+SET(CORE_FILES Dwarf.cpp Fortress.cpp Generator.cpp World.cpp)
 
 # This is a hack so that these show up in Qt Creator
 SET(COMMON_HEADERS ../common/Fortress.h ../common/utils.h ../common/Vector.h

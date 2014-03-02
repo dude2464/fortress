@@ -9,7 +9,7 @@
 #include "ui_qt/GameCanvas.h"
 
 GameCanvas::GameCanvas(IGame *game)
-  : m_Game(game), m_Position(1000, -289, 0)
+  : m_Game(game), m_Position(0, 0, 0)
 {
     setFocusPolicy(Qt::StrongFocus);
 }
