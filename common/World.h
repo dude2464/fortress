@@ -1,6 +1,7 @@
 #ifndef COMMON_WORLD_H
 #define COMMON_WORLD_H
 
+#include <list>
 #include <memory>
 
 #include "common/Vector.h"
@@ -43,6 +44,19 @@ public:
     }
 
 };
+
+namespace std {
+    template<>
+    struct hash<Coordinates> {
+        typedef Coordinates argument_type;
+        typedef std::size_t value_type;
+
+        value_type operator()(const argument_type &vec) const
+        {
+            return std::hash<Vector3>()(vec);
+        }
+    };
+}
 
 enum class Tile : unsigned char {
     ROCK    = 0x01,
@@ -89,10 +103,40 @@ public:
 
 };
 
+class IEntity {
+
+public:
+    enum {
+        T_ANIMAL    = 0x07,
+        T_HUMANOID  = 0x03,
+        DWARF       = 0x01
+    };
+
+private:
+    Coordinates m_Coordinates;
+
+public:
+    virtual ~IEntity();
+
+    inline Coordinates position() const
+    {
+        return m_Coordinates;
+    }
+
+    virtual unsigned int type() const = 0;
+
+};
+
+
 /**
  * Ground layer, contains stuff.
  */
-typedef BaseChunk<Tile> IChunk;
+class IChunk : public BaseChunk<Tile> {
+
+public:
+    virtual std::list<std::shared_ptr<const IEntity> > entities() = 0;
+
+};
 
 /**
  * Order layer, contains what we asked.

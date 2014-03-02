@@ -8,10 +8,20 @@
 
 #include "core/Generator.h"
 
-class Chunk : public BaseChunk<Tile> {
+class Entity : public IEntity {
 };
 
-class DesignationChunk : public BaseChunk<Designation> {
+class Chunk : public IChunk {
+
+private:
+    std::unordered_map<Coordinates, std::shared_ptr<Entity> > m_Entities;
+
+public:
+    std::list<std::shared_ptr<const IEntity> > entities();
+
+};
+
+class DesignationChunk : public IDesignationChunk {
 };
 
 class World : public IWorld {
