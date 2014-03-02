@@ -22,7 +22,7 @@ private:
 
 public:
     World(unsigned long seed);
-    std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk);
+    std::shared_ptr<const IChunk> getChunk(const ChunkCoordinates &chunk);
     std::shared_ptr<IDesignationChunk> getDesignationChunk(
             const ChunkCoordinates &chunk);
 

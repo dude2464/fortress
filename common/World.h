@@ -92,7 +92,7 @@ public:
 /**
  * Ground layer, contains stuff.
  */
-typedef const BaseChunk<Tile> IChunk;
+typedef BaseChunk<Tile> IChunk;
 
 /**
  * Order layer, contains what we asked.
@@ -105,11 +105,12 @@ typedef BaseChunk<Designation> IDesignationChunk;
 class IWorld {
 
 public:
-    inline  std::shared_ptr<IChunk> getChunk(int X, int Y, int Z)
+    inline  std::shared_ptr<const IChunk> getChunk(int X, int Y, int Z)
     {
         return getChunk(ChunkCoordinates(X, Y, Z));
     }
-    virtual std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk) = 0;
+    virtual std::shared_ptr<const IChunk> getChunk(
+            const ChunkCoordinates &chunk) = 0;
 
     inline std::shared_ptr<IDesignationChunk> getDesignationChunk(
             int X, int Y, int Z)

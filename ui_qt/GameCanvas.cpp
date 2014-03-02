@@ -34,7 +34,7 @@ void GameCanvas::paintEvent(QPaintEvent *event)
                              m_Position.z);
     ChunkCoordinates topleft = screencorner.chunk();
     // Pre-load chunks
-    std::shared_ptr<IChunk> chunks[] = {
+    std::shared_ptr<const IChunk> chunks[] = {
         m_Game->world()->getChunk(topleft.X  , topleft.Y  , topleft.Z),
         m_Game->world()->getChunk(topleft.X+1, topleft.Y  , topleft.Z),
         m_Game->world()->getChunk(topleft.X  , topleft.Y+1, topleft.Z),

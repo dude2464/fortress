@@ -5,7 +5,7 @@ World::World(unsigned long seed)
 {
 }
 
-std::shared_ptr<IChunk> World::getChunk(const ChunkCoordinates &coords)
+std::shared_ptr<const IChunk> World::getChunk(const ChunkCoordinates &coords)
 {
     // Get chunk from memory
     auto it = m_Chunks.find(coords);
