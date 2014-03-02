@@ -12,10 +12,21 @@
 
 class Coordinates;
 
+/**
+ * Identifies a chunk in the world.
+ *
+ * This can be converted into Coordinates, in which case it'll represent the
+ * position of this chunk's top-left corner.
+ */
 typedef CoordinatesMultiple<CHUNK_SIZE, CHUNK_SIZE,
                             CHUNK_DEPTH,
                             Coordinates> ChunkCoordinates;
 
+/**
+ * This represents a tile in the world.
+ *
+ * You can get the ChunkCoordinates of the chunk it's on using chunk().
+ */
 class Coordinates : public Vector3 {
 
 public:
