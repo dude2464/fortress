@@ -12,12 +12,16 @@ GameCanvas::GameCanvas(IGame *game)
   : m_Game(game), m_Position(1000, -289, 0)
 {
     setFocusPolicy(Qt::StrongFocus);
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
-QSize GameCanvas::sizeHint()
+QSize GameCanvas::minimumSizeHint() const
 {
-    return QSize(800, 800);
+    return QSize(400, 400);
+}
+
+QSize GameCanvas::sizeHint() const
+{
+    return QSize(800, 600);
 }
 
 void GameCanvas::paintEvent(QPaintEvent *event)
@@ -39,11 +43,14 @@ void GameCanvas::paintEvent(QPaintEvent *event)
 
     logging.log(2, "Rendering from %d;%d;%d", topleft.X, topleft.Y, topleft.Z);
 
+    int nb_x = qMin(width()/20 + 1, CHUNK_SIZE);
+    int nb_y = qMin(height()/20 + 1, CHUNK_SIZE);
+
     painter.setPen(Qt::NoPen);
 
-    for(int y = screencorner.y; y < screencorner.y + 40; ++y)
+    for(int y = screencorner.y; y < screencorner.y + nb_y; ++y)
     {
-        for(int x = screencorner.x; x < screencorner.x + 40; ++x)
+        for(int x = screencorner.x; x < screencorner.x + nb_x; ++x)
         {
             ChunkCoordinates chunk = Coordinates(
                     x, y, m_Position.z).chunk();

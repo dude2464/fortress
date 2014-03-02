@@ -90,6 +90,7 @@ void MainWindow::newGame()
     m_Game = fortress->newGame(params);
     m_GameCanvas = new GameCanvas(m_Game);
     setCentralWidget(m_GameCanvas);
+    adjustSize();
 }
 
 bool MainWindow::maybeSaveGame()

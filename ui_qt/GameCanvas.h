@@ -26,7 +26,8 @@ protected:
 
 public:
     GameCanvas(IGame *game);
-    QSize sizeHint();
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
 
 };
 
