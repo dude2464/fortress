@@ -17,7 +17,6 @@ public:
 
 };
 
-
 class Fortress : public IFortress {
 
 public:

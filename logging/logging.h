@@ -141,6 +141,11 @@ public:
 
 };
 
+/**
+ * Interface for the outputs.
+ *
+ * Implement this class to provide an alternative sink for logging messages.
+ */
 class LoggingOutput {
 
 public:
@@ -154,6 +159,9 @@ public:
 
 };
 
+/**
+ * This is a filter that discards messages above a given priority level.
+ */
 class LoggingLevelFilter : public LoggingOutput {
 
 private:
@@ -173,6 +181,12 @@ public:
 
 };
 
+/**
+ * This output writes every line to a file.
+ *
+ * The file is flushed after each new message, so it is not very fast; but you
+ * are sure not to lose entries on application crash.
+ */
 class FileOutput : public LoggingOutput {
 
 private:
@@ -196,6 +210,9 @@ public:
 
 };
 
+/**
+ * This output writes to stderr.
+ */
 class ConsoleOutput : public LoggingOutput {
 
 public:

@@ -3,9 +3,18 @@
 
 class IWorld;
 
+/**
+ * Parameters for a new game.
+ *
+ * This is created by the UI and passed to IFortress::newGame() to start a new
+ * game.
+ */
 class GameParameters {
 };
 
+/**
+ * Interface on the game.
+ */
 class IGame {
 
 public:

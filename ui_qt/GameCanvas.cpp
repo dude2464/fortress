@@ -12,12 +12,16 @@ GameCanvas::GameCanvas(IGame *game)
   : m_Game(game), m_Position(1000, -289, 0)
 {
     setFocusPolicy(Qt::StrongFocus);
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
-QSize GameCanvas::sizeHint()
+QSize GameCanvas::minimumSizeHint() const
 {
-    return QSize(800, 800);
+    return QSize(400, 400);
+}
+
+QSize GameCanvas::sizeHint() const
+{
+    return QSize(800, 600);
 }
 
 void GameCanvas::paintEvent(QPaintEvent *event)
@@ -34,12 +38,15 @@ void GameCanvas::paintEvent(QPaintEvent *event)
 
     logging.log(2, "Rendering from %d;%d;%d", topleft.X, topleft.Y, topleft.Z);
 
+    int nb_x = qMin(width()/20 + 1, CHUNK_SIZE);
+    int nb_y = qMin(height()/20 + 1, CHUNK_SIZE);
+
     painter.setPen(Qt::NoPen);
 
     Coordinates pos(0, 0, m_Position.z);
-    for(pos.y = screencorner.y; pos.y < screencorner.y + 40; ++pos.y)
+    for(pos.y = screencorner.y; pos.y < screencorner.y + nb_y; ++pos.y)
     {
-        for(pos.x = screencorner.x; pos.x < screencorner.x + 40; ++pos.x)
+        for(pos.x = screencorner.x; pos.x < screencorner.x + nb_x; ++pos.x)
         {
             Tile t = (*cache.getChunk(pos.chunk()))(pos);
             switch(t)
