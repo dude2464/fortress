@@ -6,7 +6,7 @@
 /**
  * Shifts a number left, reintroducing overflown bits on the right.
  */
-inline uint32_t shift32(uint32_t x, uint32_t y)
+inline uint32_t rotl32(uint32_t x, uint32_t y)
 {
     return (x << y | x >> (32-y)) & 0xFFFFFFFF;
 }

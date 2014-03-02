@@ -55,8 +55,8 @@ namespace std {
 
         value_type operator()(const argument_type &vec) const
         {
-            return std::hash<int>()(shift32(vec.x, 16) ^
-                                    shift32(vec.y, 8) ^
+            return std::hash<int>()(rotl32(vec.x, 16) ^
+                                    rotl32(vec.y, 8) ^
                                     vec.z);
         }
     };
@@ -68,8 +68,8 @@ namespace std {
 
         value_type operator()(const argument_type &vec) const
         {
-            return std::hash<int>()(shift32(vec.X, 16) ^
-                                    shift32(vec.Y, 8) ^
+            return std::hash<int>()(rotl32(vec.X, 16) ^
+                                    rotl32(vec.Y, 8) ^
                                     vec.Z);
         }
     };

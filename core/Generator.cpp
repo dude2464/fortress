@@ -20,7 +20,7 @@ std::shared_ptr<Chunk> Generator::generate(const ChunkCoordinates &coords)
     // TODO : Actually generate chunks
     // This just fills stuff randomly so we have something to display
 
-    std::mt19937 rnd(shift32(coords.X, 24) | shift32(coords.Y, 16) | shift32(coords.Z, 8) | m_Seed);
+    std::mt19937 rnd(rotl32(coords.X, 24) | rotl32(coords.Y, 16) | rotl32(coords.Z, 8) | m_Seed);
     std::uniform_real_distribution<> dis(0, 1);
 
     Chunk *chunk = new Chunk();
