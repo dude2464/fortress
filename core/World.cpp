@@ -17,3 +17,9 @@ std::shared_ptr<IChunk> World::getChunk(const ChunkCoordinates &coords)
     m_Chunks[coords] = chunk;
     return chunk;
 }
+
+std::shared_ptr<IDesignationChunk> World::getDesignationChunk(
+        const ChunkCoordinates &chunk)
+{
+    return std::make_shared<DesignationChunk>();
+}

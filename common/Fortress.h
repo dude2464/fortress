@@ -1,7 +1,37 @@
 #ifndef COMMON_FORTRESS_H
 #define COMMON_FORTRESS_H
 
+class Coordinates;
 class IWorld;
+
+/**
+ * A mode.
+ *
+ * This can be activated by the UI.
+ *
+ * It could be an action that is waiting for the uesr to select a zone or a
+ * target, or something purely graphical. In any case, it is something
+ * temporary.
+ */
+class IMode {
+
+public:
+    enum class InputMode {
+        //! No input is expected
+        NO_INPUT,
+        //! The user can draw a rectangle to select a zone
+        DRAW_AREA
+    };
+
+public:
+    /**
+     * Indicates how the user can interact in this mode.
+     */
+    virtual InputMode inputMode() const = 0;
+    virtual bool areaSelected(const Coordinates &topleft,
+                              const Coordinates &bottomright) = 0;
+
+};
 
 /**
  * Parameters for a new game.
@@ -20,6 +50,7 @@ class IGame {
 public:
     virtual ~IGame();
     virtual IWorld *world() = 0;
+    virtual IMode *dig() = 0;
 
 };
 

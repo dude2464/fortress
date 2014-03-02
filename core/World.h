@@ -8,14 +8,10 @@
 
 #include "core/Generator.h"
 
-class Chunk : public IChunk {
+class Chunk : public BaseChunk<Tile> {
+};
 
-public:
-    inline Tile &operator()(int x, int y, int z)
-    {
-        return m_Tiles[(z * CHUNK_DEPTH + y) * CHUNK_SIZE + x];
-    }
-
+class DesignationChunk : public BaseChunk<Designation> {
 };
 
 class World : public IWorld {
@@ -27,6 +23,8 @@ private:
 public:
     World(unsigned long seed);
     std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk);
+    std::shared_ptr<IDesignationChunk> getDesignationChunk(
+            const ChunkCoordinates &chunk);
 
 };
 

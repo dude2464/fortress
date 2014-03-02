@@ -49,16 +49,22 @@ enum class Tile : unsigned char {
     AIR     = 0x02
 };
 
+enum class Designation : unsigned char {
+    BUILD   = 0x01,
+    DIG     = 0x02
+};
+
 /**
  * A chunk is a small portion of the world.
  */
-class IChunk {
+template<class T>
+class BaseChunk {
 
 protected:
-    Tile m_Tiles[CHUNK_SIZE * CHUNK_SIZE * CHUNK_DEPTH];
+    T m_Tiles[CHUNK_SIZE * CHUNK_SIZE * CHUNK_DEPTH];
 
 public:
-    inline Tile operator()(int x, int y, int z) const
+    inline T operator()(int x, int y, int z) const
     {
         x = mod(x, CHUNK_SIZE);
         y = mod(y, CHUNK_SIZE);
@@ -66,12 +72,32 @@ public:
         return m_Tiles[(z * CHUNK_DEPTH + y) * CHUNK_SIZE + x];
     }
 
-    inline Tile operator()(const Coordinates &coords) const
+    inline T operator()(const Coordinates &coords) const
+    {
+        return (*this)(coords.x, coords.y, coords.z);
+    }
+
+    inline T &operator()(int x, int y, int z)
+    {
+        return m_Tiles[(z * CHUNK_DEPTH + y) * CHUNK_SIZE + x];
+    }
+
+    inline T &operator()(const Coordinates &coords)
     {
         return (*this)(coords.x, coords.y, coords.z);
     }
 
 };
+
+/**
+ * Ground layer, contains stuff.
+ */
+typedef const BaseChunk<Tile> IChunk;
+
+/**
+ * Order layer, contains what we asked.
+ */
+typedef BaseChunk<Designation> IDesignationChunk;
 
 /**
  * The world.
@@ -83,8 +109,15 @@ public:
     {
         return getChunk(ChunkCoordinates(X, Y, Z));
     }
-
     virtual std::shared_ptr<IChunk> getChunk(const ChunkCoordinates &chunk) = 0;
+
+    inline std::shared_ptr<IDesignationChunk> getDesignationChunk(
+            int X, int Y, int Z)
+    {
+        return getDesignationChunk(ChunkCoordinates(X, Y, Z));
+    }
+    virtual std::shared_ptr<IDesignationChunk> getDesignationChunk(
+            const ChunkCoordinates &chunk) = 0;
 
 };
 
