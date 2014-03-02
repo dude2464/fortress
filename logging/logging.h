@@ -199,7 +199,7 @@ private:
     std::string date();
 
 public:
-    FileOutput(const char *filename);
+    FileOutput(const char *filename, bool append=false);
     ~FileOutput();
 
     void log(unsigned int level,

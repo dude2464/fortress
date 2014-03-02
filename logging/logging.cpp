@@ -110,8 +110,11 @@ void LoggingLevelFilter::log(unsigned int level, const std::string &msg)
     output->log(level, msg);
 }
 
-FileOutput::FileOutput(const char *filename)
-  : m_File(filename, std::ios::out | std::ios::trunc | std::ios::binary),
+FileOutput::FileOutput(const char *filename, bool append)
+  : m_File(filename,
+           std::ios::out |
+           std::ios::binary |
+           (append?std::ios::app:std::ios::trunc)),
     m_bWritten(false)
 {
 }
