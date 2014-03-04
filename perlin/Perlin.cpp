@@ -38,9 +38,14 @@ float PerlinNoise3D::noise(int x, int y, int z)
     return (1.0 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7FFFFFFF)/1073741824.0f);
 }
 
+inline int int_down(float x)
+{
+    return (x>=0.0f)?int(x):int(x-1.0f);
+}
+
 float PerlinNoise3D::interpolatedNoise(float x, float y, float z)
 {
-    int xi = int(x), yi = int(y), zi = int(z);
+    int xi = int_down(x), yi = int_down(y), zi = int_down(z);
     float xf = x - xi, yf = y - yi, zf = z - zi;
 
     float v1 = noise(xi  , yi  , zi  );
