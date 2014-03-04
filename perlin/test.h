@@ -11,13 +11,14 @@ class RenderingWidget : public QWidget {
 
 private:
     PerlinNoise3D *m_Noise;
-    int m_Bitmap[160 * 160];
+    int m_X, m_Y, m_Z;
 
 public:
     RenderingWidget();
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 };
 
